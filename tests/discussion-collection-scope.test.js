@@ -1,0 +1,23 @@
+const assert=require('node:assert/strict');
+const S=require('../extension/analysis/collection-scope.js');
+const now=Date.parse('2026-10-14T02:00:00Z'),w=S.window({mode:'1h'},now);
+assert.equal(w.from,'2026-10-14T01:00:00.000Z');assert.equal(w.to,'2026-10-14T02:00:00.000Z');
+assert.equal(S.topicRelevant({createdAt:'2025-01-01',lastReplyAt:'2026-10-14 09:30'},w),true,'旧话题的新回复不能漏');
+assert.equal(S.topicRelevant({createdAt:'2025-01-01',lastReplyAt:'2026-10-13 09:30'},w),false);
+assert.equal(S.topicRelevant({createdAt:'2025-01-01',replyCount:20},w),null,'缺少活动时间不能冒充旧帖已无新回复');
+assert.equal(S.canStopTopics([{lastReplyAt:'2026-10-14 08:50'},{lastReplyAt:'2026-10-14 08:30'}],w),true);
+assert.equal(S.canStopTopics([{lastReplyAt:'2026-10-14 08:30'},{lastReplyAt:'2026-10-14 08:50'}],w),false);
+assert.equal(S.canStopTopics([{createdAt:'2025-01-01'}],w),false);
+const records=[{id:'root',kind:'topic',createdAt:'2025-01-01T00:00:00Z',timePrecision:'second',content:'题目'}, {id:'parent',kind:'reply',parentId:'root',createdAt:'2025-01-02T00:00:00Z',timePrecision:'second',content:'旧观点'}, {id:'new',kind:'reply',parentId:'parent',createdAt:'2026-10-14T01:20:00Z',timePrecision:'second',content:'本节课追问'}, {id:'old',kind:'reply',parentId:'root',createdAt:'2025-01-03T00:00:00Z',timePrecision:'second',content:'其他旧回复'}];
+const selected=S.records(records,w);assert.deepEqual(selected.records.map(r=>r.id),['root','parent','new']);assert.deepEqual(selected.contextIds,['root','parent']);assert.equal(selected.selected,1);
+assert.equal(S.records([...records,{id:'unknown',kind:'reply',content:'时间缺失'}],w).unknownTime,1);
+assert.throws(()=>S.window({mode:'custom',from:'2026-10-14 10:00',to:'2026-10-14 09:00'},now),/早于/);
+console.log('Pre-collection window, activity pruning and necessary reply context passed');
+(async()=>{
+ const control=S.createControl();control.pause();let settled=false;const pending=control.wait().then(()=>{settled=true;});
+ await Promise.resolve();assert.equal(settled,false);control.resume();await pending;assert.equal(settled,true,'resume releases the existing cursor');
+ const stopped=S.createControl(),request=new AbortController();stopped.aborters.add(request);stopped.pause();const waiting=stopped.wait();stopped.cancel();
+ await assert.rejects(waiting,/停止旧范围/);assert.equal(request.signal.aborted,true,'restart aborts an in-flight request');
+ stopped.resume();await assert.rejects(stopped.wait(),/停止旧范围/,'resuming must not revive a cancelled old run');
+ await S.createControl().wait();console.log('Collection control: resume, cancellation, request abort and old-run isolation passed');
+})().catch(error=>{console.error(error);process.exitCode=1;});

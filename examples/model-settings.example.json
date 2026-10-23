@@ -1,0 +1,7 @@
+{
+  "cx_discussion_model": "请填写可用的模型名称",
+  "cx_discussion_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "cx_discussion_anonymous": true,
+  "cx_discussion_max_topics": 0,
+  "cx_discussion_request_timeout_seconds": 500
+}

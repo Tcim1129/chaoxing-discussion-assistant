@@ -1,0 +1,22 @@
+# Local credentials and private classroom material
+.env
+.env.*
+!.env.example
+*config.local*
+*.har
+*.log
+*.csv
+*.xlsx
+*.txt
+*.jsonl
+private/
+backups/
+userdata/
+user-data/
+browser-profile/
+node_modules/
+dist/
+output/
+__pycache__/
+.DS_Store
+Thumbs.db

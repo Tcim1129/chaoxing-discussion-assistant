@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>超星讨论总结助手设置</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <img class="hero-icon" src="icon.svg" alt="图标" />
+      <div>
+        <h1>超星讨论总结助手</h1>
+        <p>设置 AI 服务、模型和采集范围。</p>
+      </div>
+    </header>
+    <section class="card">
+      <label>API Key <input id="apiKey" type="password" placeholder="请输入 API Key"></label>
+      <div class="field-grid">
+        <label>模型名称 <input id="model" type="text" placeholder="填写服务商支持的模型名称"></label>
+        <label>请求超时（秒） <input id="requestTimeoutSeconds" type="number" min="30" max="600" step="30"></label>
+        <label>本次最多采集 <select id="maxTopics">
+          <option value="0">不限制（按所选班级全部读完，推荐）</option>
+          <option value="400">最新 400 个话题</option>
+          <option value="150">最新 150 个话题</option>
+          <option value="50">最新 50 个话题（只够看最新动态）</option>
+          <option value="20">最新 20 个话题（最快）</option>
+        </select></label>
+      </div>
+      <label>服务商 <select id="preset"></select></label>
+      <label>接口地址 <input id="baseUrl" type="text" placeholder="例如 https://dashscope.aliyuncs.com/compatible-mode/v1"></label>
+      <div class="recent-wrap">
+        <div class="recent-title">最近使用</div>
+        <div id="recentList" class="recent-list"></div>
+      </div>
+      <label class="checkbox-row"><input id="anonymous" type="checkbox"> 匿名处理姓名</label>
+      <div class="actions">
+        <button id="save" class="primary">保存设置</button>
+        <button id="reset">恢复默认</button>
+        <button id="test">测试连接</button>
+        <button id="export">导出配置</button>
+        <button id="import">导入配置</button>
+      </div>
+      <p class="hint">密钥保存在当前浏览器。联网分析会将讨论内容发送到你设置的接口。</p>
+      <p class="hint">导出的配置不含密钥和最近使用记录；自定义接口地址仍会保留，请在分享前检查。</p>
+      <p id="status" class="status">准备就绪。</p>
+    </section>
+  </main>
+  <input id="importFile" type="file" accept="application/json" hidden />
+  <script src="options.js"></script>
+</body>
+</html>

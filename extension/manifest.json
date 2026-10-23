@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "超星讨论总结助手",
+  "version": "1.1.0",
+  "description": "采集课堂讨论，查看参与情况、关键词、讨论深度与原文依据。",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "scripting",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "*://*.chaoxing.com/*",
+    "*://i.mooc.chaoxing.com/*",
+    "https://*/*",
+    "http://*/*"
+  ],
+  "action": {
+    "default_title": "超星讨论总结助手"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.chaoxing.com/*",
+        "https://mooc2-ans.chaoxing.com/*",
+        "https://groupweb.chaoxing.com/*"
+      ],
+      "js": [
+        "analysis/engine.js",
+        "analysis/collection-scope.js",
+        "content-script.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+const assert=require('node:assert/strict'),A=require('../extension/analysis/engine.js'),C=require('../extension/analysis/classroom.js'),Q=require('../extension/analysis/grading.js');
+const row={id:'same',topicId:'topic',classId:'c',authorId:'s',author:'学生甲',role:'student',kind:'reply',content:'财政支持教育。'};
+const d=A.createDataset({comments:[row,row]});assert.equal(d.records.length,1,'同班相同ID不得再次追加班级后缀重复计数');assert.equal(A.calculateMetrics(d).total,1);
+const multi=A.createDataset({comments:[{...row,classId:'a'},{...row,classId:'b'},{...row,classId:'b'}]});assert.equal(multi.records.length,2);assert.equal(A.filterDataset(multi,{classId:'b'}).records.length,1);
+const separate=A.createDataset({comments:[row,{...row,id:'same-text-other-person',authorId:'other'},{...row,id:'same-person-new-post'}]});assert.equal(A.calculateMetrics(separate).total,3,'不同平台ID的真实同文发言分别计数');
+const old={...d,records:[d.records[0],{...d.records[0],id:'same@c'},{...d.records[0],id:'teacher',platformId:'teacher',role:'teacher'},{...d.records[0],id:'background',platformId:'background',captureContext:true}]};
+const before=JSON.stringify(old),metrics=A.calculateMetrics(old);assert.equal(metrics.total,1,'旧数据副本只计一次');assert.equal(metrics.duplicateExcluded,1);assert.equal(metrics.excluded,2);assert.equal(C.activity(old,{}).total,1);assert.equal(Q.material(old,{classId:'c'},{mode:'class'},Q.config()).people[0].ids.length,1);assert.equal(JSON.stringify(old),before,'读取统计不删除原文或评分记录');
+const cross=A.createDataset({comments:[{id:'root',classId:'a',authorId:'a',role:'student',kind:'topic',content:'甲班题目'},{id:'root',classId:'b',authorId:'b',role:'student',kind:'topic',content:'乙班题目'},{id:'child-b',classId:'b',authorId:'b2',role:'student',kind:'reply',parentId:'root',content:'乙班回复'}]});assert.equal(cross.records.find(r=>r.id==='child-b').parentId,'root@b','同名根记录按班级连接');
+console.log('ok - stable-ID dedup, old snapshots, separate real posts, context exclusion and class-specific parents');

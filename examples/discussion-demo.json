@@ -1,0 +1,61 @@
+{
+  "title": "模拟课堂：公共服务预算",
+  "complete": true,
+  "classes": [
+    {
+      "id": "demo-class",
+      "name": "示例一班",
+      "studentCount": 4
+    }
+  ],
+  "records": [
+    {
+      "id": "demo-topic",
+      "topicId": "demo-topic",
+      "kind": "topic",
+      "role": "teacher",
+      "author": "示例教师",
+      "authorId": "demo-teacher",
+      "classId": "demo-class",
+      "title": "公共服务预算如何分配？",
+      "content": "在总预算有限的情况下，应如何安排教育与社区医疗投入？请说明理由并回应不同意见。",
+      "time": "2026-10-12 09:00"
+    },
+    {
+      "id": "demo-reply-a",
+      "topicId": "demo-topic",
+      "parentId": "demo-topic",
+      "kind": "reply",
+      "role": "student",
+      "author": "学生甲",
+      "authorId": "demo-a",
+      "classId": "demo-class",
+      "content": "教育投入有长期收益，可以优先改善学校基础设施，但需要说明受益人群和资金使用效果。",
+      "time": "2026-10-12 09:05"
+    },
+    {
+      "id": "demo-reply-b",
+      "topicId": "demo-topic",
+      "parentId": "demo-reply-a",
+      "kind": "reply",
+      "role": "student",
+      "author": "学生乙",
+      "authorId": "demo-b",
+      "classId": "demo-class",
+      "content": "如果社区老年人口占比较高，医疗需求可能更紧迫。比较两项投入时，还应了解现有服务覆盖情况。",
+      "time": "2026-10-12 09:08"
+    },
+    {
+      "id": "demo-reply-c",
+      "topicId": "demo-topic",
+      "parentId": "demo-reply-b",
+      "kind": "reply",
+      "role": "student",
+      "author": "学生甲",
+      "authorId": "demo-a",
+      "classId": "demo-class",
+      "content": "同意需要补充人口结构。我把原来的优先教育改为先保障基本服务，再根据实际缺口安排新增投入。",
+      "time": "2026-10-12 09:12"
+    }
+  ]
+}
