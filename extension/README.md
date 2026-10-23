@@ -76,4 +76,4 @@ python scripts/package.py
 
 这是独立的教学辅助工具，与超星及各模型服务商无隶属关系。课程平台更新可能影响采集，模型结果也需要教师核对。
 
-当前未指定开源许可证。
+项目代码采用 MIT 许可证；第三方代码、平台内容和用户数据不因本项目许可而获得授权。完整文本见 [项目许可证](https://github.com/Tcim1129/chaoxing-discussion-assistant/blob/main/LICENSE)。

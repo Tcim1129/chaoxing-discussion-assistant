@@ -1,5 +1,7 @@
 # 超星课堂讨论分析助手
 
+A Chrome/Edge extension for teachers to collect Chaoxing discussions by class, topic and time, inspect participation and source-backed summaries, and export classroom records. Local statistics work without an AI key; online analysis uses a user-configured endpoint. Samples are synthetic. See [maintenance](docs/MAINTENANCE.md), [contributing](CONTRIBUTING.md) and [security](SECURITY.md).
+
 面向教师的浏览器扩展：整理超星课程话题与回复，查看参与情况、聚焦观点、讨论分歧与原文依据。支持本地统计、按需联网分析、课堂记录保存和成绩表导出。
 
 当前版本：**1.1.0**。适用于支持 Manifest V3 的 Chrome、Edge 浏览器。
@@ -77,4 +79,8 @@ python scripts/package.py
 
 这是独立的教学辅助工具，与超星及各模型服务商无隶属关系。课程平台更新可能影响采集，模型结果也需要教师核对。
 
-当前未指定开源许可证。
+采用 [MIT 许可证](LICENSE)。第三方与课堂内容的范围见 [许可说明](THIRD_PARTY_NOTICES.md)。
+
+参与维护请阅读 [贡献指南](CONTRIBUTING.md)；已有检查和后续维护重点见 [维护记录](docs/MAINTENANCE.md)，安全问题按 [安全反馈](SECURITY.md) 处理。
+
+[课堂使用案例](docs/CLASSROOM_USE.md) 记录维护者提供的使用情况及证据范围，不将模拟演示计作真实课堂数据。

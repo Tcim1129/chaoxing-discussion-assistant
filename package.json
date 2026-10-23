@@ -2,6 +2,7 @@
   "name": "chaoxing-discussion-assistant",
   "version": "1.1.0",
   "private": true,
+  "license": "MIT",
   "description": "面向教师的超星课堂讨论分析浏览器扩展",
   "scripts": {
     "test": "node scripts/verify.mjs",
